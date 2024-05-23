@@ -1,0 +1,385 @@
+definitions:
+  apierror.ErrResponse:
+    properties:
+      code:
+        description: user-level error code
+        type: string
+      error:
+        description: application-level error message, for debugging
+        type: string
+      message:
+        description: user-level status message
+        type: string
+    type: object
+  dtos.ClerkEventData:
+    properties:
+      backup_code_enabled:
+        type: boolean
+      banned:
+        type: boolean
+      create_organization_enabled:
+        type: boolean
+      created_at:
+        type: integer
+      delete_self_enabled:
+        type: boolean
+      email_addresses:
+        items:
+          $ref: '#/definitions/dtos.ClerkEventEmailAddress'
+        type: array
+      external_accounts:
+        items:
+          $ref: '#/definitions/dtos.ClerkEventExternalAccount'
+        type: array
+      external_id: {}
+      first_name:
+        type: string
+      has_image:
+        type: boolean
+      id:
+        type: string
+      image_url:
+        type: string
+      last_active_at:
+        type: integer
+      last_name:
+        type: string
+      last_sign_in_at: {}
+      locked:
+        type: boolean
+      lockout_expires_in_seconds: {}
+      object:
+        type: string
+      passkeys:
+        items: {}
+        type: array
+      password_enabled:
+        type: boolean
+      phone_numbers:
+        items: {}
+        type: array
+      primary_email_address_id:
+        type: string
+      primary_phone_number_id: {}
+      primary_web3_wallet_id: {}
+      private_metadata: {}
+      profile_image_url:
+        type: string
+      public_metadata: {}
+      saml_accounts:
+        items: {}
+        type: array
+      totp_enabled:
+        type: boolean
+      two_factor_enabled:
+        type: boolean
+      unsafe_metadata: {}
+      updated_at:
+        type: integer
+      username:
+        type: string
+      verification_attempts_remaining:
+        type: integer
+      web3_wallets:
+        items: {}
+        type: array
+    type: object
+  dtos.ClerkEventDto:
+    properties:
+      data:
+        $ref: '#/definitions/dtos.ClerkEventData'
+      object:
+        type: string
+      type:
+        type: string
+    type: object
+  dtos.ClerkEventEmailAddress:
+    properties:
+      created_at:
+        type: integer
+      email_address:
+        type: string
+      id:
+        type: string
+      linked_to:
+        items:
+          $ref: '#/definitions/dtos.ClerkEventLinkedTo'
+        type: array
+      object:
+        type: string
+      reserved:
+        type: boolean
+      updated_at:
+        type: integer
+      verification:
+        $ref: '#/definitions/dtos.ClerkEventVerification'
+    type: object
+  dtos.ClerkEventExternalAccount:
+    properties:
+      approved_scopes:
+        type: string
+      created_at:
+        type: integer
+      email_address:
+        type: string
+      family_name:
+        type: string
+      given_name:
+        type: string
+      google_id:
+        type: string
+      id:
+        type: string
+      label: {}
+      object:
+        type: string
+      picture:
+        type: string
+      public_metadata: {}
+      updated_at:
+        type: integer
+      username: {}
+      verification:
+        $ref: '#/definitions/dtos.ClerkEventVerification'
+    type: object
+  dtos.ClerkEventLinkedTo:
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+    type: object
+  dtos.ClerkEventVerification:
+    properties:
+      attempts: {}
+      expire_at: {}
+      status:
+        type: string
+      strategy:
+        type: string
+    type: object
+  dtos.PinnedNoteDTO:
+    properties:
+      link:
+        type: string
+      text:
+        type: string
+    type: object
+  dtos.ProfileResponseDTO:
+    properties:
+      pinned_note:
+        $ref: '#/definitions/dtos.PinnedNoteDTO'
+      profile_image:
+        type: string
+      short_description:
+        type: string
+      social_links:
+        $ref: '#/definitions/dtos.SocialLinksDTO'
+      subtitle:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+      website_metadata:
+        $ref: '#/definitions/dtos.WebsiteMetadataDTO'
+      website_settings:
+        $ref: '#/definitions/dtos.WebsiteSettingsDTO'
+    type: object
+  dtos.SocialLinksDTO:
+    properties:
+      behance:
+        type: string
+      codepen:
+        type: string
+      dev_to:
+        type: string
+      dribbble:
+        type: string
+      facebook:
+        type: string
+      github:
+        type: string
+      goodreads:
+        type: string
+      instagram:
+        type: string
+      linkedin:
+        type: string
+      medium:
+        type: string
+      spotify:
+        type: string
+      twitter:
+        type: string
+      unsplash:
+        type: string
+      youtube:
+        type: string
+    type: object
+  dtos.UpdateProfileRequestDTO:
+    properties:
+      pinned_note:
+        $ref: '#/definitions/dtos.PinnedNoteDTO'
+      profile_image:
+        type: string
+      public_email:
+        type: string
+      public_phone:
+        type: string
+      short_description:
+        type: string
+      social_links:
+        $ref: '#/definitions/dtos.SocialLinksDTO'
+      subtitle:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+      website_metadata:
+        $ref: '#/definitions/dtos.WebsiteMetadataDTO'
+      website_settings:
+        $ref: '#/definitions/dtos.WebsiteSettingsDTO'
+    type: object
+  dtos.WebsiteMetadataDTO:
+    properties:
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  dtos.WebsiteSettingsDTO:
+    properties:
+      language:
+        type: string
+      theme:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is the API for the 4d project backend
+  title: 4d Backend API
+  version: "1.0"
+paths:
+  /profiles/{username}:
+    get:
+      description: Retrieve the profile of a user by their username
+      parameters:
+      - description: Username
+        in: path
+        maxLength: 12
+        minLength: 4
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ProfileResponseDTO'
+        "400":
+          description: Invalid username
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+        "404":
+          description: Profile not found
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+      summary: Get user profile
+      tags:
+      - Profiles
+    put:
+      consumes:
+      - application/json
+      description: Updates the profile of a user identified by the username parameter.
+        The request body should contain the profile data.
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      - description: Profile Data
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateProfileRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+      summary: Update user profile
+      tags:
+      - Profiles
+  /webhooks/clerk/create:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint processes a create user event and creates a user
+        profile based on the event data.
+      parameters:
+      - description: Clerk Event Data
+        in: body
+        name: ClerkEventDto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ClerkEventDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+      summary: Create User Event
+      tags:
+      - Clerk Webhooks
+  /webhooks/clerk/update:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint processes an update user event and updates the user
+        profile based on the event data.
+      parameters:
+      - description: Clerk Event Data
+        in: body
+        name: ClerkEventDto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ClerkEventDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apierror.ErrResponse'
+      summary: Update User Event
+      tags:
+      - Clerk Webhooks
+swagger: "2.0"
