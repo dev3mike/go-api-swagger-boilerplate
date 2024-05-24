@@ -42,3 +42,8 @@ change-mod-name:
 	@go run $(SCRIPT) $(MODULE_NAME)
 
 # make change-mod-name MODULE_NAME=new/package/name
+
+reset-seed:
+	@make delete-all
+	@make up
+	@make seed

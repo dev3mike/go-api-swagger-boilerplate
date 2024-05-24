@@ -62,6 +62,7 @@ Welcome to the Go API Boilerplate! This boilerplate is designed to help you quic
 | `make delete-all`   | Delete all migrations                            |
 | `make reset`        | Reset the database and reapply all migrations    |
 | `make seed`         | Seed the database                                |
+| `make reset-seed`         | Reset and delete all table, run the migration and seed the database                                |
 | `make change-mod-name MODULE_NAME=new/package/name` | Change module name |
 
 #### Database Migrations
