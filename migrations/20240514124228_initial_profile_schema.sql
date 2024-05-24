@@ -10,7 +10,6 @@ CREATE TABLE profiles (
 	updated TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_profiles_username ON profiles(username);
 CREATE INDEX idx_profiles_private_email ON profiles(private_email);
 CREATE INDEX idx_profiles_external_id ON profiles(external_id);
 
@@ -19,7 +18,6 @@ CREATE INDEX idx_profiles_external_id ON profiles(external_id);
 -- +goose Down
 -- +goose StatementBegin
 DROP INDEX idx_profiles_external_id;
-DROP INDEX IF EXISTS idx_profiles_username;
 DROP INDEX IF EXISTS idx_profiles_private_email;
 DROP TABLE IF EXISTS profiles;
 -- +goose StatementEnd
