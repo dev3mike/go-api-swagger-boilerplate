@@ -5,7 +5,10 @@ export $(shell sed 's/=.*//' .env)
 # Commands
 run:
 	@go run cmd/server/main.go
-	
+
+swagger:
+	@swag init -g ./cmd/server/main.go
+
 db-status:
 	@GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_CONNECTION) goose -dir=$(MIGRATION_PATH) status
 
