@@ -2,6 +2,7 @@ package indexhandler
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/dev3mike/go-api-swagger-boilerplate/internal/dtos"
@@ -56,6 +57,11 @@ func (h *IndexHandler) PostRootHandler(w http.ResponseWriter, r *http.Request) {
 		errorhandler.HandleInternalError(w, r, err)
 		return
 	}
+
+	// Read token claims
+	tokenClaims := r.Context().Value(dtos.TokenClaimsKey).(*dtos.UserClaims)
+	clerkUserId := tokenClaims.Id
+	fmt.Println(clerkUserId)
 
 	profileDto := dtos.ProfileResponseDTO{
 		Fullname: username,
