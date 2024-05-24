@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/dev3mike/go-api-swagger-boilerplate/cmd/server/dependencies"
 	"github.com/dev3mike/go-api-swagger-boilerplate/cmd/server/logger"
 	"github.com/dev3mike/go-api-swagger-boilerplate/cmd/server/router"
 	"github.com/dev3mike/go-api-swagger-boilerplate/internal/database"
@@ -60,7 +61,7 @@ func DisconnectDatabase() {
 func initializeRouter(logger *slog.Logger) http.Handler {
 
 	// Initialize dependencies
-	router.InitializeDependencies(logger)
+	dependencies.Initialize(logger)
 
 	r := router.InitializeRouter()
 
