@@ -28,7 +28,7 @@ Welcome to the Go API Boilerplate! This boilerplate is designed to help you quic
    - Follow an enterprise-level folder structure to keep your code organized and maintainable.
 
 9. 🔐 **Authentication and Authorization with Clerk**
-   - Secure your API with authentication and authorization using Clerk.
+   - Secure your API with authentication and authorization using Clerk with implemented webhook.
 
 10. 🧪 **Best Practices for Dependencies and Testing**
     - Manage dependencies and make your code testable by following industry best practices.
