@@ -4,7 +4,7 @@ Welcome to the Go API Boilerplate! This boilerplate is designed to help you quic
 ## Features 🌟
 
 1. 🌍 **Environment Validation with xEnv**
-   - Ensure your environment variables are validated and accessible in a type-safe manner.
+   - Ensure your environment variables are loaded from .env and validated and accessible in a type-safe manner.
 
 2. ✅ **Input Validation with xMapper**
    - Validate JSON inputs, structs, and even single parameters using the powerful xMapper library.
