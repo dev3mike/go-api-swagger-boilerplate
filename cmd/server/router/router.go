@@ -22,7 +22,7 @@ func InitializeRouter() *chi.Mux {
 
 // SetupRoutes configures all the routes for the router.
 func SetupRoutes(r *chi.Mux, logger *slog.Logger) *chi.Mux {
-	// Profile Routes
+
 	r.Route("/", func(r chi.Router) {
 		// Public route
 		r.Get("/", dependencies.IndexHandler.GetRootHandler)
@@ -33,6 +33,7 @@ func SetupRoutes(r *chi.Mux, logger *slog.Logger) *chi.Mux {
 
 	// Clerk Webhooks
 	r.Route("/webhooks/", func(r chi.Router) {
+		// Make sure to register these endpoints in Clerk's dashboard
 		r.Post("/clerk/create", dependencies.ClerkHandler.HandleCreateUserEvent)
 		r.Post("/clerk/update", dependencies.ClerkHandler.HandleUpdateUserEvent)
 	})
