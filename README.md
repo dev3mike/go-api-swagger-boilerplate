@@ -1,3 +1,5 @@
+![golang-api-boilerplate](https://github.com/dev3mike/go-api-swagger-boilerplate/assets/69217981/2f59fe1c-f87f-4d56-bb94-aee272bf97d8)
+
 # Go API Boilerplate 🚀
 Welcome to the Go API Boilerplate! This boilerplate is designed to help you quickly set up a robust and scalable API using Go. It incorporates several best practices and powerful libraries to make your development process smoother and more efficient.
 
