@@ -5,9 +5,9 @@ import (
 	_ "github.com/dev3mike/go-api-swagger-boilerplate/docs"
 )
 
-// @title 4d Backend API
+// @title GO Backend API Boilerplate
 // @version 1.0
-// @description This is the API for the 4d project backend
+// @description Add your api description here
 func main() {
 	setup.SetupServerPrerequisites()
 	setup.StartServer()

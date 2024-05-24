@@ -15,92 +15,21 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/profiles/{username}": {
+        "/": {
             "get": {
-                "description": "Retrieve the profile of a user by their username",
+                "description": "Responds with a welcome message for the API",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Profiles"
+                    "Sample API"
                 ],
-                "summary": "Get user profile",
-                "parameters": [
-                    {
-                        "maxLength": 12,
-                        "minLength": 4,
-                        "type": "string",
-                        "description": "Username",
-                        "name": "username",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Get a welcome message",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dtos.ProfileResponseDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid username",
-                        "schema": {
-                            "$ref": "#/definitions/apierror.ErrResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Profile not found",
-                        "schema": {
-                            "$ref": "#/definitions/apierror.ErrResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Updates the profile of a user identified by the username parameter. The request body should contain the profile data.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Profiles"
-                ],
-                "summary": "Update user profile",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Username",
-                        "name": "username",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Profile Data",
-                        "name": "profile",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dtos.UpdateProfileRequestDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/apierror.ErrResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/apierror.ErrResponse"
+                            "$ref": "#/definitions/dtos.ResponseDTO"
                         }
                     }
                 }
@@ -185,6 +114,41 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/apierror.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/{username}": {
+            "post": {
+                "description": "Takes a username from the URL and returns a profile if the username is valid",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sample API"
+                ],
+                "summary": "Post a username and get a profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Username",
+                        "name": "username",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.ProfileResponseDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
                         "schema": {
                             "$ref": "#/definitions/apierror.ErrResponse"
                         }
@@ -426,152 +390,24 @@ const docTemplate = `{
                 }
             }
         },
-        "dtos.PinnedNoteDTO": {
-            "type": "object",
-            "properties": {
-                "link": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                }
-            }
-        },
         "dtos.ProfileResponseDTO": {
             "type": "object",
             "properties": {
-                "pinned_note": {
-                    "$ref": "#/definitions/dtos.PinnedNoteDTO"
+                "email": {
+                    "type": "string"
+                },
+                "fullname": {
+                    "type": "string"
                 },
                 "profile_image": {
                     "type": "string"
-                },
-                "short_description": {
-                    "type": "string"
-                },
-                "social_links": {
-                    "$ref": "#/definitions/dtos.SocialLinksDTO"
-                },
-                "subtitle": {
-                    "type": "string"
-                },
-                "summary": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "website_metadata": {
-                    "$ref": "#/definitions/dtos.WebsiteMetadataDTO"
-                },
-                "website_settings": {
-                    "$ref": "#/definitions/dtos.WebsiteSettingsDTO"
                 }
             }
         },
-        "dtos.SocialLinksDTO": {
+        "dtos.ResponseDTO": {
             "type": "object",
             "properties": {
-                "behance": {
-                    "type": "string"
-                },
-                "codepen": {
-                    "type": "string"
-                },
-                "dev_to": {
-                    "type": "string"
-                },
-                "dribbble": {
-                    "type": "string"
-                },
-                "facebook": {
-                    "type": "string"
-                },
-                "github": {
-                    "type": "string"
-                },
-                "goodreads": {
-                    "type": "string"
-                },
-                "instagram": {
-                    "type": "string"
-                },
-                "linkedin": {
-                    "type": "string"
-                },
-                "medium": {
-                    "type": "string"
-                },
-                "spotify": {
-                    "type": "string"
-                },
-                "twitter": {
-                    "type": "string"
-                },
-                "unsplash": {
-                    "type": "string"
-                },
-                "youtube": {
-                    "type": "string"
-                }
-            }
-        },
-        "dtos.UpdateProfileRequestDTO": {
-            "type": "object",
-            "properties": {
-                "pinned_note": {
-                    "$ref": "#/definitions/dtos.PinnedNoteDTO"
-                },
-                "profile_image": {
-                    "type": "string"
-                },
-                "public_email": {
-                    "type": "string"
-                },
-                "public_phone": {
-                    "type": "string"
-                },
-                "short_description": {
-                    "type": "string"
-                },
-                "social_links": {
-                    "$ref": "#/definitions/dtos.SocialLinksDTO"
-                },
-                "subtitle": {
-                    "type": "string"
-                },
-                "summary": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "website_metadata": {
-                    "$ref": "#/definitions/dtos.WebsiteMetadataDTO"
-                },
-                "website_settings": {
-                    "$ref": "#/definitions/dtos.WebsiteSettingsDTO"
-                }
-            }
-        },
-        "dtos.WebsiteMetadataDTO": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "dtos.WebsiteSettingsDTO": {
-            "type": "object",
-            "properties": {
-                "language": {
-                    "type": "string"
-                },
-                "theme": {
+                "message": {
                     "type": "string"
                 }
             }
@@ -585,8 +421,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "4d Backend API",
-	Description:      "This is the API for the 4d project backend",
+	Title:            "GO Backend API Boilerplate",
+	Description:      "Add your api description here",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -158,118 +158,46 @@ definitions:
       strategy:
         type: string
     type: object
-  dtos.PinnedNoteDTO:
-    properties:
-      link:
-        type: string
-      text:
-        type: string
-    type: object
   dtos.ProfileResponseDTO:
     properties:
-      pinned_note:
-        $ref: '#/definitions/dtos.PinnedNoteDTO'
+      email:
+        type: string
+      fullname:
+        type: string
       profile_image:
         type: string
-      short_description:
-        type: string
-      social_links:
-        $ref: '#/definitions/dtos.SocialLinksDTO'
-      subtitle:
-        type: string
-      summary:
-        type: string
-      title:
-        type: string
-      website_metadata:
-        $ref: '#/definitions/dtos.WebsiteMetadataDTO'
-      website_settings:
-        $ref: '#/definitions/dtos.WebsiteSettingsDTO'
     type: object
-  dtos.SocialLinksDTO:
+  dtos.ResponseDTO:
     properties:
-      behance:
-        type: string
-      codepen:
-        type: string
-      dev_to:
-        type: string
-      dribbble:
-        type: string
-      facebook:
-        type: string
-      github:
-        type: string
-      goodreads:
-        type: string
-      instagram:
-        type: string
-      linkedin:
-        type: string
-      medium:
-        type: string
-      spotify:
-        type: string
-      twitter:
-        type: string
-      unsplash:
-        type: string
-      youtube:
-        type: string
-    type: object
-  dtos.UpdateProfileRequestDTO:
-    properties:
-      pinned_note:
-        $ref: '#/definitions/dtos.PinnedNoteDTO'
-      profile_image:
-        type: string
-      public_email:
-        type: string
-      public_phone:
-        type: string
-      short_description:
-        type: string
-      social_links:
-        $ref: '#/definitions/dtos.SocialLinksDTO'
-      subtitle:
-        type: string
-      summary:
-        type: string
-      title:
-        type: string
-      website_metadata:
-        $ref: '#/definitions/dtos.WebsiteMetadataDTO'
-      website_settings:
-        $ref: '#/definitions/dtos.WebsiteSettingsDTO'
-    type: object
-  dtos.WebsiteMetadataDTO:
-    properties:
-      description:
-        type: string
-      title:
-        type: string
-    type: object
-  dtos.WebsiteSettingsDTO:
-    properties:
-      language:
-        type: string
-      theme:
+      message:
         type: string
     type: object
 info:
   contact: {}
-  description: This is the API for the 4d project backend
-  title: 4d Backend API
+  description: Add your api description here
+  title: GO Backend API Boilerplate
   version: "1.0"
 paths:
-  /profiles/{username}:
+  /:
     get:
-      description: Retrieve the profile of a user by their username
+      description: Responds with a welcome message for the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ResponseDTO'
+      summary: Get a welcome message
+      tags:
+      - Sample API
+  /{username}:
+    post:
+      description: Takes a username from the URL and returns a profile if the username
+        is valid
       parameters:
       - description: Username
         in: path
-        maxLength: 12
-        minLength: 4
         name: username
         required: true
         type: string
@@ -281,49 +209,12 @@ paths:
           schema:
             $ref: '#/definitions/dtos.ProfileResponseDTO'
         "400":
-          description: Invalid username
+          description: Bad request
           schema:
             $ref: '#/definitions/apierror.ErrResponse'
-        "404":
-          description: Profile not found
-          schema:
-            $ref: '#/definitions/apierror.ErrResponse'
-      summary: Get user profile
+      summary: Post a username and get a profile
       tags:
-      - Profiles
-    put:
-      consumes:
-      - application/json
-      description: Updates the profile of a user identified by the username parameter.
-        The request body should contain the profile data.
-      parameters:
-      - description: Username
-        in: path
-        name: username
-        required: true
-        type: string
-      - description: Profile Data
-        in: body
-        name: profile
-        required: true
-        schema:
-          $ref: '#/definitions/dtos.UpdateProfileRequestDTO'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/apierror.ErrResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/apierror.ErrResponse'
-      summary: Update user profile
-      tags:
-      - Profiles
+      - Sample API
   /webhooks/clerk/create:
     post:
       consumes:

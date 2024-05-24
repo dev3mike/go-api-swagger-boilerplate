@@ -7,13 +7,10 @@ import (
 	"net/http"
 
 	"github.com/dev3mike/go-api-swagger-boilerplate/internal/dtos"
-	"github.com/dev3mike/go-api-swagger-boilerplate/internal/entities"
 	errorhandler "github.com/dev3mike/go-api-swagger-boilerplate/internal/handlers/error_handler"
 	"github.com/dev3mike/go-api-swagger-boilerplate/internal/interfaces"
 	clerkservice "github.com/dev3mike/go-api-swagger-boilerplate/internal/services/clerk"
-	profileservice "github.com/dev3mike/go-api-swagger-boilerplate/internal/services/profile"
 	internalerrors "github.com/dev3mike/go-api-swagger-boilerplate/pkg/constants/internal_errors"
-	stringhelpers "github.com/dev3mike/go-api-swagger-boilerplate/pkg/helpers/string"
 )
 
 type ClerkHandler struct {
@@ -48,31 +45,35 @@ func (h *ClerkHandler) HandleCreateUserEvent(w http.ResponseWriter, r *http.Requ
 	}
 	clerkUserId := eventDto.Data.ID
 
-	user, error := h.clerkService.GetUser(clerkUserId)
-	if error != nil {
-		errorhandler.HandleInternalError(w, r, error)
-		return
-	}
+	fmt.Println("Clerk User ID: ", clerkUserId)
 
-	fullname := fmt.Sprintf("%s %s", stringhelpers.NullableStringPointer(user.FirstName), stringhelpers.NullableStringPointer(user.LastName))
+	// In here you can call the Clerk API to get the user details and create a profile
+	//
+	// user, error := h.clerkService.GetUser(clerkUserId)
+	// if error != nil {
+	// 	errorhandler.HandleInternalError(w, r, error)
+	// 	return
+	// }
 
-	if err != nil {
-		errorhandler.HandleInternalError(w, r, err)
-		return
-	}
+	// fullname := fmt.Sprintf("%s %s", stringhelpers.NullableStringPointer(user.FirstName), stringhelpers.NullableStringPointer(user.LastName))
 
-	profileEntity := &entities.ProfileEntity{
-		PrivateEmail: &user.EmailAddresses[0].EmailAddress,
-		ProfileImage: &user.ProfileImageURL,
-		ExternalId:   &user.ID,
-		Fullname:     &fullname,
-	}
-	err = profileservice.CreateProfile(profileEntity)
+	// if err != nil {
+	// 	errorhandler.HandleInternalError(w, r, err)
+	// 	return
+	// }
 
-	if err != nil {
-		errorhandler.HandleInternalError(w, r, err)
-		return
-	}
+	// profileEntity := &entities.ProfileEntity{
+	// 	PrivateEmail: &user.EmailAddresses[0].EmailAddress,
+	// 	ProfileImage: &user.ProfileImageURL,
+	// 	ExternalId:   &user.ID,
+	// 	Fullname:     &fullname,
+	// }
+	// err = profileservice.CreateProfile(profileEntity)
+
+	// if err != nil {
+	// 	errorhandler.HandleInternalError(w, r, err)
+	// 	return
+	// }
 }
 
 // HandleUpdateUserEvent processes the incoming HTTP request for updating a user event
@@ -99,24 +100,28 @@ func (h *ClerkHandler) HandleUpdateUserEvent(w http.ResponseWriter, r *http.Requ
 	}
 	clerkUserId := eventDto.Data.ID
 
-	user, error := h.clerkService.GetUser(clerkUserId)
-	if error != nil {
-		errorhandler.HandleInternalError(w, r, error)
-		return
-	}
+	fmt.Println("Clerk User ID: ", clerkUserId)
 
-	fullname := fmt.Sprintf("%s %s", stringhelpers.NullableStringPointer(user.FirstName), stringhelpers.NullableStringPointer(user.LastName))
+	// In here you can call the Clerk API to get the user details and update the profile
+	//
+	// user, error := h.clerkService.GetUser(clerkUserId)
+	// if error != nil {
+	// 	errorhandler.HandleInternalError(w, r, error)
+	// 	return
+	// }
 
-	profileEntity := &entities.ProfileEntity{
-		PrivateEmail: &user.EmailAddresses[0].EmailAddress,
-		ProfileImage: &user.ProfileImageURL,
-		ExternalId:   &user.ID,
-		Fullname:     &fullname,
-	}
-	err = profileservice.UpdateProfilePartiallyByExternalId(clerkUserId, profileEntity)
+	// fullname := fmt.Sprintf("%s %s", stringhelpers.NullableStringPointer(user.FirstName), stringhelpers.NullableStringPointer(user.LastName))
 
-	if err != nil {
-		errorhandler.HandleInternalError(w, r, err)
-		return
-	}
+	// profileEntity := &entities.ProfileEntity{
+	// 	PrivateEmail: &user.EmailAddresses[0].EmailAddress,
+	// 	ProfileImage: &user.ProfileImageURL,
+	// 	ExternalId:   &user.ID,
+	// 	Fullname:     &fullname,
+	// }
+	// err = profileservice.UpdateProfilePartiallyByExternalId(clerkUserId, profileEntity)
+
+	// if err != nil {
+	// 	errorhandler.HandleInternalError(w, r, err)
+	// 	return
+	// }
 }
