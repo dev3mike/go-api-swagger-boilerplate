@@ -17,6 +17,7 @@ import (
 
 // InitializeRouter sets up a new router.
 func InitializeRouter() *chi.Mux {
+	clerkv2.SetKey(environments.Env.ClerkSecretKey)
 	return chi.NewRouter()
 }
 
