@@ -17,8 +17,7 @@ var Env struct {
 func InitializeEnvironments(logger *slog.Logger) {
 	// Load environment variables from a .env file
 	if err := xenv.LoadEnvFile(".env"); err != nil {
-		logger.Error("Error loading .env file: ", err)
-		panic("Failed to load .env file")
+		logger.Info("Error loading .env file: ", err)
 	}
 
 	// Validate environment variables
