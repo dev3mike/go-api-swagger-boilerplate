@@ -64,6 +64,24 @@ Welcome to the Go API Boilerplate! This boilerplate is designed to help you quic
 | `make seed`         | Seed the database                                |
 | `make change-mod-name MODULE_NAME=new/package/name` | Change module name |
 
+#### Database Migrations
+To handle database migrations, we use Goose. First, make sure you have installed Goose by following the instructions here: [Goose GitHub](https://github.com/pressly/goose).
+
+To create a new migration, use this command:
+```sh
+goose create TITLE_OF_MIGRATION sql
+```
+
+Then, move the generated SQL file to the `migrations` folder and update it as needed.
+
+
+### Installing Dependencies
+
+To install all the dependencies listed in the `go.mod` file, use the following command:
+
+```sh
+go mod download
+```
 
 #### License
 This code is made available under the MIT License. This means you can use it freely in your personal and commercial projects. For more details, see the LICENSE file in the repository.
